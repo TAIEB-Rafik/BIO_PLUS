@@ -1,0 +1,48 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<a href="/createnewuser" class="btn btn-primary" >Nouvel utilisateur</a>
+		<table class="table table-bordered table-hover text-center mt-4">
+			<tr>
+				<th>Nom</th>
+				<th>Email</th>
+				<th>Sexe</th>
+				<th>Date de naissance</th>
+				<th>Delete</th>
+			</tr>
+			{% for user in users %}
+			<tr>
+				<td>{{ user.name }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.gender }}</td>
+				<td>{{ user.birthday|date("m/d/Y") }}</td>
+				<td><a href="#"><i class="fa fa-trash" onclick="deleteUser({{ user.id }})"></i></a></td>
+			</tr>
+			{% endfor %}		
+		
+		</table>
+	</div>
+
+<script>
+	function deleteUser(id_user)
+	{
+		if (confirm("Voulez-vous supprimer cet utilisateur ?")) {
+			$.ajax({
+				type: 'GET',
+				url: '/deleteuser',
+				data: {id_user : id_user},
+				success: function(data){
+					location.reload();
+				}
+			});
+		}
+	}
+
+</script>
+
+
+
+{% endblock %}

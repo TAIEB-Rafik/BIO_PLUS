@@ -1,0 +1,8 @@
+Le moteur :
+	 Il tourne tant qu’il est alimenté. Il est adapté quand vous souhaitez effectuer un mouvement continu ne demandant pas une grande précision.
+
+Le moteur pas à pas :
+	 Il tourne par sorte de petits bonds successifs. C’est-à-dire que vous allez pouvoir lui demander de faire, par exemple, 50 sauts, ou 112 sauts, qui correspondrons à un certain déplacement (par exemple un quart de tour). Il est adapté quand vous souhaitez faire un mouvement continu de grande précision (ils sont par exemple utilisés dans les imprimantes 3D).
+
+Le servomoteur :
+	 Il tourne ave un certain angle, défini selon un signal de type PWM (Pulse Width Modulation). Souvent les petits moteurs sont limités et ne peuvent pas faire plus d’un tour. Ils sont donc plutôt utilisés pour un mouvement court de grande précision.

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}BioPlus{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
+        <link rel="stylesheet" href="css/all.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light navbar_alluplus">
+        <div class="container">
+          <a href="/"><b>BioPlus</b></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            </ul>
+            <ul class="navbar-nav my-2 my-lg-0">
+                <li class="nav-item">
+                    <p class="nav-link text-dark">Bonjour</p> 
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin"><b>Administration</b></a>
+                    </li>               
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><b>Se Déconnecter</b></a>
+                </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+
+
+
+
+
+
+    {# include the javascript #}
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/moment.min.js"></script>
+    <script type="text/javascript" src="js/daterangepicker.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/custom.js"></script>
+    {# <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> #}
+
+<div class="alert alert-warning alert-dismissible fade" id="alert_danger" role="alert">
+  <strong id="alerttext"></strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+    <div class="container" style='background-color:white;'>
+    <br><br>
+    	{% block body %} {% endblock %}
+    </div>  
+
+
+
+
+    {% block javascripts %}{% endblock %}
+
+    
+
+
+    <style>
+        body {
+            background-color: #f4f9fd;
+        }
+        .navbar_alluplus
+        {
+            background-color: #fff;
+            box-shadow: 0px 1px 13px -4px rgba(0,0,0,0.75);
+        }
+    </style>
+
+   
+    </body>
+</html>
+
+

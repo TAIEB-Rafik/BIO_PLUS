@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BioPlus{% endblock %}
+
+{% block body %}
+
+    <h1 class="h3 font-weight-bold mb-3 text-center">Paramètres</h1>
+    <table class="table table-bordered text-center">
+        <tr>
+            <td style="width:50%;"><p class="font-weight-bold p-1 h3">Température de l'air</p></td>
+            <td><p class="p-1 h3" id="temp_air_actual" >{{room.temperature}} °c</p></td>
+        </tr>
+        <tr>
+            <td style="width:50%;"><p class="font-weight-bold p-1 h3">Humidité de l'air</p></td>
+            <td><p class="p-1 h3" id="humidity_actual" >{{room.humidity}} %</p></td>
+        </tr>
+        <tr>
+            <td style="width:50%;"><p class="font-weight-bold p-1 h3">Humidité du sol</p></td>
+            <td><p class="p-1 h3" id="humidity_sol_actual" >{{room.humiditySol}} %</p></td>
+        </tr>
+        <tr>
+            <td style="width:50%;"><p class="font-weight-bold p-1 h3">Taux de CO2</p></td>
+            <td><p class="p-1 h3" id="co2_taux_actual" >{{room.tauxCo2}} ppm</p></td>
+        </tr>
+    </table>
+    <br>
+    <hr>
+    <h1 class="h3 font-weight-bold mb-3 mt-5 text-center">Contrôle Manuel</h1>
+
+    <table class="table text-center">
+        <tr>
+            <td><b class="h4 font-weight-bold">Eclairage</b></td>
+            <td><button onclick="updateParameter( {{ inverse[room.allumerLed] }}  , 'allumerLed')" style="height:40px; width:100px;" class="btn font-weight-bold {% if room.allumerLed ==1 %} btn-primary {% else %} btn-danger {% endif %} ">{{ onoff[room.allumerLed] }} </button></td>
+        </tr>
+        <tr>
+            <td><b class="h4 font-weight-bold">Arrosage</b></td>
+            <td><button onclick="updateParameter( {{ inverse[room.declencherAroosage] }}  , 'declencherAroosage')"  style="height:40px; width:100px;" class="btn font-weight-bold {% if room.declencherAroosage ==1 %} btn-primary {% else %} btn-danger {% endif %} ">{{ onoff[room.declencherAroosage] }} </button></td>
+        </tr>
+        <tr>
+            <td><b class="h4 font-weight-bold">Ventilation</b></td>
+            <td><button onclick="updateParameter( {{ inverse[room.declencherVentilation] }}  , 'declencherVentilation')"  style="height:40px; width:100px;" class="btn font-weight-bold {% if room.declencherVentilation ==1 %} btn-primary {% else %} btn-danger {% endif %} ">{{ onoff[room.declencherVentilation] }} </button></td>
+        </tr>
+    </table>
+<br><br><br>
+
+<script>
+    function updateParameter(val, type)
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/updatParameters',
+            data: {param_val : val, type : type},
+            success: function(data){
+                location.reload();
+            }
+        });
+    }
+
+setInterval(function(){
+$.ajax({
+    type: 'GET',
+    url: '/getActualParam',
+    success: function(data){
+        var params = JSON.parse(data);
+        $('#temp_air_actual').html(params['temp_air_actual']+" °c");
+        $('#humidity_actual').html(params['humidity_actual']+" %");
+        $('#humidity_sol_actual').html(params['humidity_sol_actual']+" %");
+        $('#co2_taux_actual').html(params['co2_taux_actual']+" ppm");
+    }
+});
+} ,3000); 
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Administration !{% endblock %}
+
+{% block body %}
+    <h1 class="text-center font-weight-bold h3 mb-5">Ajuster les paramètres de la serre</h1>
+    <table class="table text-center">
+        <tr>
+            <td><b class="h4 font-weight-bold">Températue air (°c) </b></td>
+            <td  style="width:20%;">
+                Min
+                <input value='{{room.idealTemperature}}'  onkeyup="updateParameter(this,'temp_air')" type="text" class="form-control">
+            </td>
+            <td  style="width:20%;">
+                Max
+                <input value='{{room.idealTemperatureMax}}'  onkeyup="updateParameter(this,'temp_air_max')" type="text" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <td><b class="h4 font-weight-bold">Humidité air (%)</b></td>
+            <td  style="width:20%;">Min<input value='{{room.idealHumidity}}'  onkeyup="updateParameter(this,'humid_air')" type="text" class="form-control"></td>
+            <td  style="width:20%;">Max<input value='{{room.idealHumidityMax}}'  onkeyup="updateParameter(this,'humid_air_max')" type="text" class="form-control"></td>
+        </tr>
+        <tr>
+            <td><b class="h4 font-weight-bold">Humidité Sol (%) </b></td>
+            <td  style="width:20%;">Min<input value='{{room.idealHumiditySol}}'  onkeyup="updateParameter(this,'humid_sol')" type="text" class="form-control"></td>
+            <td  style="width:20%;">Max<input value='{{room.idealHumiditySolMax}}'  onkeyup="updateParameter(this,'humid_sol_max')" type="text" class="form-control"></td>
+        </tr>
+        <tr>
+            <td><b class="h4 font-weight-bold">Taux de CO2 (ppm) </b></td>
+            <td  style="width:20%;">Min<input value='{{room.co2TauxIdeal}}'  onkeyup="updateParameter(this,'co2_taux')" type="text" class="form-control"></td>
+            <td  style="width:20%;">Max<input value='{{room.co2TauxIdealMax}}'  onkeyup="updateParameter(this,'co2_taux_max')" type="text" class="form-control"></td>
+        </tr>
+    </table>
+
+
+<script>
+    function updateParameter(val, type)
+    {
+        param_val = parseFloat(val.value);
+        if(param_val != NaN && param_val > 0 && param_val < 2000)
+        {
+            $.ajax({
+                type: 'GET',
+                url: '/updatParameters',
+                data: {param_val : param_val, type : type},
+                success: function(data){
+
+                }
+            });
+        }
+        else
+        {
+            alert("Veuillez insérer une autre valeur svp");
+            location.reload();
+        }
+    }
+</script>
+
+
+{% endblock %}
